@@ -42,7 +42,7 @@ Part 2: using two vantage points to measure topography.
 
 ## 11. The interferometric triangle
 
-Height of the ground point: z = h − ρ cos θ. (The notebook writes this as z = h = ρ cos θ, a typo.) The baseline, its angle and the range must all be known accurately for good topography.
+Height of the ground point: z = h − ρ cos θ. (The notebook writes this as z = h = ρ cos θ, a typo.) The law-of-cosines step is sin(θ − α) = (ρ² + B² − (ρ + δρ)²) / 2ρB, which matches the figure; the notebook prints this fraction with the opposite sign. The baseline, its angle and the range must all be known accurately for good topography.
 
 ## 12. How the data are collected sets p
 

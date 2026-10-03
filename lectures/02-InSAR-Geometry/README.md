@@ -29,6 +29,7 @@ It has five quizzes, each followed by an answer slide.
 ## Notes on the source
 
 - The notebook writes the height of the ground point as "z = h = ρ cos θ"; the slides use the intended z = h − ρ cos θ.
+- The notebook's law-of-cosines step has its sign flipped. The slides use sin(θ − α) = (ρ² + B² − (ρ + δρ)²) / 2ρB, which matches the figure's geometry and the InSAR theory slides in Lecture 3.
 - The notebook places the "linear or quadratic phase variation" remark next to the DEM error term. The slides attach it to the baseline-calibration error, which produces those smooth ramps (as the baseline-error quiz shows).
 - The homework does not state p. The solution in the speaker notes gives both p = 1 and p = 2. At near range the perpendicular baseline is zero, so the fringe rate is zero.
 - Author names in the reading list are corrected to Rodríguez and Bürgmann.
