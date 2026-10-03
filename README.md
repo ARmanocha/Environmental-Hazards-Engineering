@@ -7,5 +7,6 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | # | Lecture | Slides | Speaker notes |
 |---|---------|--------|---------------|
 | 1 | Synthetic Aperture Radar Interferometry: SAR principles and phenomenology | [PDF](lectures/01-SAR-Interferometry/SAR_Interferometry_Akshay_Raj_Manocha.pdf) | [Notes](lectures/01-SAR-Interferometry/speaker_notes.md) |
+| 2 | Geometric Aspects of InSAR: topography, displacement and error sources | [PDF](lectures/02-InSAR-Geometry/InSAR_Geometry_Akshay_Raj_Manocha.pdf) | [Notes](lectures/02-InSAR-Geometry/speaker_notes.md) |
 
 Each lecture folder has its own README with details, sources and credits.
