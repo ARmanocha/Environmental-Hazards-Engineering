@@ -11,4 +11,10 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 2 | Geometric Aspects of InSAR: topography, displacement and error sources | [PDF](lectures/02-InSAR-Geometry/InSAR_Geometry_Akshay_Raj_Manocha.pdf) | [Notes](lectures/02-InSAR-Geometry/speaker_notes.md) |
 | 3 | InSAR Theory: real interferograms, error sources, correlation and wavelength | [PDF](lectures/03-InSAR-Theory/InSAR_Theory_Akshay_Raj_Manocha.pdf) | [Notes](lectures/03-InSAR-Theory/speaker_notes.md) |
 
-Each lecture folder has its own README with details, sources and credits.
+## Practicals
+
+| # | Practical | Slides | Speaker notes |
+|---|-----------|--------|---------------|
+| 1 | InSAR Processing with ESA SNAP: mapping volcano deformation with Sentinel-1, with a real example from Kīlauea, Hawaii, 2018 | [PDF](practicals/01-InSAR-Processing-with-SNAP/InSAR_Processing_with_SNAP_Akshay_Raj_Manocha.pdf) | [Notes](practicals/01-InSAR-Processing-with-SNAP/speaker_notes.md) |
+
+Each lecture and practical folder has its own README with details, sources and credits.
