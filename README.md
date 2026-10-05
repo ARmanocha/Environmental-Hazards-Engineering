@@ -11,6 +11,7 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 2 | Geometric Aspects of InSAR: topography, displacement and error sources | [PDF](lectures/02-InSAR-Geometry/InSAR_Geometry_Akshay_Raj_Manocha.pdf) | [Notes](lectures/02-InSAR-Geometry/speaker_notes.md) |
 | 3 | InSAR Theory: real interferograms, error sources, correlation and wavelength | [PDF](lectures/03-InSAR-Theory/InSAR_Theory_Akshay_Raj_Manocha.pdf) | [Notes](lectures/03-InSAR-Theory/speaker_notes.md) |
 | 4 | Landslide Monitoring with InSAR: slope geometry, techniques, time series, case studies and engineering use (with animation) | [PDF](lectures/04-Landslide-Monitoring-InSAR/Landslide_Monitoring_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/04-Landslide-Monitoring-InSAR/speaker_notes.md) |
+| 5 | Earthquake Monitoring with InSAR: the earthquake cycle, coseismic fringes, fault models, case studies and engineering use (with animation) | [PDF](lectures/05-Earthquake-Monitoring-InSAR/Earthquake_Monitoring_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/05-Earthquake-Monitoring-InSAR/speaker_notes.md) |
 
 ## Practicals
 

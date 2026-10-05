@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ACC='#C2410C',BLUE='#2F6DB5',SOIL='#E8E1D2';
+var CYC=12,LOCK=0.78,OFF=4.0;
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+function rr(x,y,w,h,r){g.beginPath();g.moveTo((x+r)*S,y*S);g.arcTo((x+w)*S,y*S,(x+w)*S,(y+h)*S,r*S);g.arcTo((x+w)*S,(y+h)*S,x*S,(y+h)*S,r*S);g.arcTo(x*S,(y+h)*S,x*S,y*S,r*S);g.arcTo(x*S,y*S,(x+w)*S,y*S,r*S);g.closePath();}
+function state(t){var p=(t%CYC)/CYC;
+ if(LOCK>p){return {phase:0,strain:p/LOCK,slip:0,label:'Locked fault: the ground bends'};}
+ var q=(p-LOCK)/(1-LOCK);
+ if(0.12>q){return {phase:1,strain:1-q/0.12,slip:q/0.12,label:'Earthquake: the ground snaps back'};}
+ return {phase:2,strain:0,slip:1,label:'After: the offset stays, strain builds again'};}
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=(now-t0)/1000+7.5;var s=state(t);
+ g.fillStyle='#F6F5F1';g.fillRect(0,0,3328,1280);
+ var mx=40,my=90,mw=900,mh=470,cx=mx+mw/2;
+ g.fillStyle=SOIL;rr(mx,my,mw,mh,16);g.fill();
+ g.strokeStyle=ACC;g.lineWidth=5*S;g.setLineDash([16*S,10*S]);g.beginPath();g.moveTo(cx*S,my*S);g.lineTo(cx*S,(my+mh)*S);g.stroke();g.setLineDash([]);
+ txt('Fault',cx+12,my+34,26,ACC,600);
+ var A=70*OFF/4;
+ for(var r=0;3>r;r++){var y0=my+110+r*130;
+  g.strokeStyle=r===1?NAVY:'#8A7F6B';g.lineWidth=(r===1?9:5)*S;g.beginPath();var ps=-1;
+  for(var i=0;160>=i;i++){var x=mx+20+i*(mw-40)/160,xd=(x-cx)/90;
+   var v=s.strain*A*0.5*(2/Math.PI)*Math.atan(xd)*1.0;
+   var off=s.slip*A*0.5*(x>cx?1:-1);
+   var yy=y0+v+off;
+   var side=x>cx?1:-1;if(i===0){g.moveTo(x*S,yy*S);}else{if(side===ps){g.lineTo(x*S,yy*S);}else{g.lineTo(cx*S,(yy-off+s.slip*A*0.5*-side)*S);g.moveTo(cx*S,yy*S);g.lineTo(x*S,yy*S);}}ps=side;}
+  g.stroke();}
+ txt('Road',mx+24,my+282,24,NAVY,600);
+ txt('Map view, motion exaggerated',mx,my+mh+40,24,SOFT);
+ var bx=1000;
+ txt(s.label,bx,130,32,s.phase===1?ACC:NAVY,600);
+ var ph=['Interseismic','Coseismic','Postseismic'];
+ for(var k=0;3>k;k++){var on=k===s.phase;g.fillStyle=on?NAVY:'#FFFFFF';rr(bx+k*215,180,200,64,12);g.fill();g.strokeStyle=RULE;g.lineWidth=2*S;g.stroke();
+  txt(ph[k],bx+k*215+100,222,24,on?'#F6F5F1':SOFT,600,'center');}
+ txt('What InSAR measures',bx,320,28,SOFT,600);
+ var m=['Slow bending: mm per year, over decades','The jump: centimetres to metres in one day','Afterslip and relaxation: weeks to years'];
+ for(k=0;3>k;k++){txt((k===s.phase?'▶ ':'   ')+m[k],bx,372+k*52,26,k===s.phase?NAVY:SOFT,k===s.phase?600:500);}
+ txt('Elastic rebound (Reid, 1910)',bx,590,24,SOFT);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>
