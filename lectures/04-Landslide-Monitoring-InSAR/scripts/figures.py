@@ -153,7 +153,8 @@ NX, NY, DX = 300, 240, 0.02     # 6 km x 4.8 km
 X, Y, h, rng = terrain(NX, NY, DX, 3, [3.0])
 SL = [(1.85, 3.1, 0.55, 0.75, 42.0), (4.15, 1.55, 0.5, 0.65, 28.0)]
 vd = slides_field(X, Y, SL)
-forest = gaussian_filter(rng.normal(0, 1, X.shape), 10) > 0.55
+fz = gaussian_filter(rng.normal(0, 1, X.shape), 10)
+forest = fz / fz.std() > 0.8                     # smooth random field scaled to unit variance: ~20% forest
 ls = LightSource(azdeg=315, altdeg=40)
 shade = ls.hillshade(h, vert_exag=1.5, dx=DX * 1000, dy=DX * 1000)
 fig, axs = plt.subplots(1, 2, figsize=(16.6, 6.5), dpi=DPI)
@@ -189,7 +190,8 @@ for k, (cx, cy, a_, b_, vmax) in enumerate(SL):
 X2, Y2, h2, rng2 = terrain(1100, 160, 0.02, 8, [3.0, 9.6, 16.2])
 SL2 = [(1.9, 1.7, 0.5, 0.6, 40), (4.1, 1.2, 0.5, 0.6, 30), (8.5, 1.9, 0.45, 0.55, 35), (10.7, 1.4, 0.5, 0.6, 25), (15.1, 1.6, 0.5, 0.6, 38), (17.3, 1.9, 0.45, 0.5, 30)]
 vd2 = slides_field(X2, Y2, SL2)
-fo2 = gaussian_filter(rng2.normal(0, 1, X2.shape), 10) > 0.55
+fz2 = gaussian_filter(rng2.normal(0, 1, X2.shape), 10)
+fo2 = fz2 / fz2.std() > 0.8
 vl2, bad2, _, _ = los_vel(X2, Y2, h2, vd2, 0.02, 'desc', np.random.default_rng(4))
 vl2a, bad2a, _, _ = los_vel(X2, Y2, h2, vd2, 0.02, 'asc', np.random.default_rng(6))
 vcomb = np.where(np.abs(vl2a) > np.abs(vl2), vl2a, vl2)
