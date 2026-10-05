@@ -17,6 +17,7 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 8 | Drought Monitoring with Remote Sensing: drought types, rainfall, vegetation, temperature, soil moisture and GRACE, SPI/VCI/VHI, case studies and services (with animation) | [PDF](lectures/08-Drought-Monitoring-RS/Drought_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/08-Drought-Monitoring-RS/speaker_notes.md) |
 | 9 | Wildfire Monitoring with Remote Sensing: detecting active fires, fire radiative power, burn severity (NBR/dNBR), fire danger, case studies and post-fire hazards (with animation) | [PDF](lectures/09-Wildfire-Monitoring-RS/Wildfire_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/09-Wildfire-Monitoring-RS/speaker_notes.md) |
 | 10 | Coastal Erosion Monitoring with Remote Sensing: shoreline indicators, waterline extraction and tide correction, rates of change and their uncertainty, harbours and the one-line model, case studies and coastal management (with animation) | [PDF](lectures/10-Coastal-Erosion-RS/Coastal_Erosion_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/10-Coastal-Erosion-RS/speaker_notes.md) |
+| 11 | Tsunami Monitoring with Remote Sensing: wave physics, the warning chain, ocean-bottom sensors, satellite altimetry and SWOT, ionospheric detection, damage and inundation mapping, case studies and hazard planning (with animation) | [PDF](lectures/11-Tsunami-Monitoring-RS/Tsunami_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/11-Tsunami-Monitoring-RS/speaker_notes.md) |
 
 ## Practicals
 
