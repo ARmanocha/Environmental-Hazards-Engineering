@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ACC='#C2410C',BLUE='#2F6DB5',SHADE='rgba(231,165,122,0.45)';
+var N=48,CYC=18,CLIM=[10,8,10,15,35,160,300,270,180,70,20,10];
+function series(fail){var r=[],s=[],q=[],w=[],a=0.45,b=0.25,c=0.08,ss=60,qq=60,ww=60;
+ for(var m=0;N>m;m++){var f=1;if(m>=17){if(21>m){f=0.3;}}var p=CLIM[m%12]*f;r.push(p);
+  ss=ss+a*(p-ss);qq=qq+b*(ss-qq);ww=ww+c*(qq-ww);s.push(ss);q.push(qq);w.push(ww);}
+ return [r,s,q,w];}
+var DRY=series(true),NOR=(function(){var r=[],s=[],q=[],w=[],ss=60,qq=60,ww=60;for(var m=0;N>m;m++){var p=CLIM[m%12];r.push(p);ss=ss+0.45*(p-ss);qq=qq+0.25*(ss-qq);ww=ww+0.08*(qq-ww);s.push(ss);q.push(qq);w.push(ww);}return [r,s,q,w];})();
+var ROWS=[['Rain','Meteorological drought'],['Soil moisture','Agricultural drought'],['River flow','Hydrological drought'],['Groundwater','Groundwater drought']];
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+var X0=360,X1=1330,TOP=70,RH=128;
+function px(m){return X0+(X1-X0)*m/(N-1);}
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=((now-t0)/1000+8)%CYC;var cur=Math.min(N-1,t/(CYC-2)*(N-1));
+ g.fillStyle='#F6F5F1';g.fillRect(0,0,3328,1280);
+ txt('Month '+(Math.floor(cur)+1)+'  (the monsoon of year 2 fails)',X0,40,26,SOFT,600);
+ for(var k=0;4>k;k++){var y0=TOP+k*RH,h=RH-28,d=DRY[k],nn=NOR[k],mx=0;for(var m=0;N>m;m++){if(nn[m]>mx){mx=nn[m];}}
+  g.fillStyle='#FFFFFF';g.fillRect(X0*S,y0*S,(X1-X0)*S,h*S);g.strokeStyle=RULE;g.lineWidth=2*S;g.strokeRect(X0*S,y0*S,(X1-X0)*S,h*S);
+  txt(ROWS[k][0],20,y0+38,28,NAVY,600);txt(ROWS[k][1],20,y0+72,24,SOFT,500);
+  function yv(v){return y0+h-8-(h-16)*v/mx;}
+  var inD=false;
+  for(m=0;cur>=m;m++){var ratio=d[m]/Math.max(nn[m],1);if(k===0){ratio=(d[m]+0.01)/(nn[m]+0.01);}
+   if(0.7>ratio){g.fillStyle=SHADE;g.fillRect((px(m)-(X1-X0)/(N-1)/2)*S,y0*S,((X1-X0)/(N-1))*S,h*S);if(m===Math.floor(cur)){inD=true;}}}
+  g.setLineDash([8*S,6*S]);g.strokeStyle='#9CA3AF';g.lineWidth=2.5*S;g.beginPath();for(m=0;N>m;m++){if(m===0){g.moveTo(px(m)*S,yv(nn[m])*S);}else{g.lineTo(px(m)*S,yv(nn[m])*S);}}g.stroke();g.setLineDash([]);
+  g.strokeStyle=k===0?BLUE:NAVY;g.lineWidth=4*S;g.beginPath();for(m=0;Math.floor(cur)>=m;m++){if(m===0){g.moveTo(px(m)*S,yv(d[m])*S);}else{g.lineTo(px(m)*S,yv(d[m])*S);}}g.stroke();
+  g.fillStyle=inD?ACC:'#FFFFFF';g.strokeStyle=inD?ACC:RULE;g.lineWidth=2*S;g.fillRect(1360*S,(y0+24)*S,270*S,52*S);g.strokeRect(1360*S,(y0+24)*S,270*S,52*S);
+  txt(inD?'In drought':'Normal',1495,y0+59,26,inD?'#FFF8F2':SOFT,600,'center');}
+ g.fillStyle=NAVY;g.fillRect((px(cur)-1.5)*S,(TOP-8)*S,3*S,(4*RH-12)*S);
+ txt('Dashed: a normal year. Shaded: below 70% of normal.',X0,TOP+4*RH+22,24,SOFT,500);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>

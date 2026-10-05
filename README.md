@@ -14,6 +14,7 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 5 | Earthquake Monitoring with InSAR: the earthquake cycle, coseismic fringes, fault models, case studies and engineering use (with animation) | [PDF](lectures/05-Earthquake-Monitoring-InSAR/Earthquake_Monitoring_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/05-Earthquake-Monitoring-InSAR/speaker_notes.md) |
 | 6 | Land Subsidence Monitoring with InSAR: causes, aquifer compaction, vertical motion, differential settlement, case studies and management (with animation) | [PDF](lectures/06-Land-Subsidence-InSAR/Land_Subsidence_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/06-Land-Subsidence-InSAR/speaker_notes.md) |
 | 7 | Flood Mapping with SAR: why water looks dark, thresholds and change detection, accuracy, case studies, depth and flood frequency (with animation) | [PDF](lectures/07-Flood-Mapping-SAR/Flood_Mapping_SAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/07-Flood-Mapping-SAR/speaker_notes.md) |
+| 8 | Drought Monitoring with Remote Sensing: drought types, rainfall, vegetation, temperature, soil moisture and GRACE, SPI/VCI/VHI, case studies and services (with animation) | [PDF](lectures/08-Drought-Monitoring-RS/Drought_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/08-Drought-Monitoring-RS/speaker_notes.md) |
 
 ## Practicals
 
