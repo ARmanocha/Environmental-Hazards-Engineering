@@ -16,6 +16,7 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 7 | Flood Mapping with SAR: why water looks dark, thresholds and change detection, accuracy, case studies, depth and flood frequency (with animation) | [PDF](lectures/07-Flood-Mapping-SAR/Flood_Mapping_SAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/07-Flood-Mapping-SAR/speaker_notes.md) |
 | 8 | Drought Monitoring with Remote Sensing: drought types, rainfall, vegetation, temperature, soil moisture and GRACE, SPI/VCI/VHI, case studies and services (with animation) | [PDF](lectures/08-Drought-Monitoring-RS/Drought_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/08-Drought-Monitoring-RS/speaker_notes.md) |
 | 9 | Wildfire Monitoring with Remote Sensing: detecting active fires, fire radiative power, burn severity (NBR/dNBR), fire danger, case studies and post-fire hazards (with animation) | [PDF](lectures/09-Wildfire-Monitoring-RS/Wildfire_Monitoring_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/09-Wildfire-Monitoring-RS/speaker_notes.md) |
+| 10 | Coastal Erosion Monitoring with Remote Sensing: shoreline indicators, waterline extraction and tide correction, rates of change and their uncertainty, harbours and the one-line model, case studies and coastal management (with animation) | [PDF](lectures/10-Coastal-Erosion-RS/Coastal_Erosion_RS_Akshay_Raj_Manocha.pdf) | [Notes](lectures/10-Coastal-Erosion-RS/speaker_notes.md) |
 
 ## Practicals
 
