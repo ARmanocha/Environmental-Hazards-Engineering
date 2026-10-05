@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ACC='#C2410C',BLUE='#2F6DB5';
+var C1=1.191042e8,C2=14387.752,TB=300,TF=1000,CYC=14;
+function B(l,T){return C1/(Math.pow(l,5)*(Math.exp(C2/(l*T))-1));}
+function BT(l,L){return C2/(l*Math.log(1+C1/(Math.pow(l,5)*L)));}
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+function rr(x,y,w,h,r){g.beginPath();g.moveTo((x+r)*S,y*S);g.arcTo((x+w)*S,y*S,(x+w)*S,(y+h)*S,r*S);g.arcTo((x+w)*S,(y+h)*S,x*S,(y+h)*S,r*S);g.arcTo(x*S,(y+h)*S,x*S,y*S,r*S);g.arcTo(x*S,y*S,(x+w)*S,y*S,r*S);g.closePath();}
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=((now-t0)/1000+9)%CYC;
+ var u=Math.min(t/(CYC-2),1),area=Math.pow(10,0+4*u),p=area/1e6;
+ var b4=BT(3.9,p*B(3.9,TF)+(1-p)*B(3.9,TB)),b11=BT(11,p*B(11,TF)+(1-p)*B(11,TB));
+ g.fillStyle='#F6F5F1';g.fillRect(0,0,3328,1280);
+ var PX=40,PY=70,PS=470;
+ g.fillStyle='#7E9B6A';g.fillRect(PX*S,PY*S,PS*S,PS*S);
+ g.strokeStyle=NAVY;g.lineWidth=3*S;g.strokeRect(PX*S,PY*S,PS*S,PS*S);
+ var side=Math.max(Math.sqrt(area)/1000*PS,2.5),cx=PX+PS*0.55,cy=PY+PS*0.45;
+ g.fillStyle=ACC;g.fillRect((cx-side/2)*S,(cy-side/2)*S,side*S,side*S);
+ g.strokeStyle='#FFD25A';g.lineWidth=2*S;g.beginPath();g.arc(cx*S,cy*S,(side/2+14)*S,0,2*Math.PI);g.stroke();
+ txt('One 1 km × 1 km pixel',PX,50,28,NAVY,600);
+ var sd=Math.sqrt(area);
+ txt('Fire: '+(area>=100?Math.round(area).toLocaleString('en-IN'):area.toFixed(0))+' m²  ('+(sd>=10?Math.round(sd):sd.toFixed(1))+' × '+(sd>=10?Math.round(sd):sd.toFixed(1))+' m)',PX,PY+PS+44,28,ACC,600);
+ txt((p*100).toFixed(p*100>=0.1?2:4)+'% of the pixel',PX,PY+PS+82,26,SOFT,500);
+ var BX=640,BY=110,BW=150,BH=420,LO=290,HI=520;
+ function bar(x,val,col,lab){var h=BH*(Math.min(val,HI)-LO)/(HI-LO);
+  g.fillStyle='#FFFFFF';rr(x,BY,BW,BH,10);g.fill();g.strokeStyle=RULE;g.lineWidth=2*S;g.stroke();
+  g.fillStyle=col;g.fillRect(x*S,(BY+BH-h)*S,BW*S,h*S);
+  txt(Math.round(val)+' K',x+BW/2,BY-16,32,NAVY,600,'center');txt(lab,x+BW/2,BY+BH+38,26,col,600,'center');}
+ bar(BX,b4,ACC,'3.9 µm');bar(BX+220,b11,BLUE,'11 µm');
+ txt('Pixel brightness temperature',BX,52,28,NAVY,600);
+ var RX=1130,flag=((b4-b11)>10)?(b4>320):false;
+ txt('Difference',RX,150,28,SOFT,600);
+ txt(Math.round(b4-b11)+' K',RX,215,56,NAVY,600);
+ g.fillStyle=flag?ACC:'#FFFFFF';rr(RX,260,470,80,12);g.fill();g.strokeStyle=flag?ACC:RULE;g.lineWidth=2*S;g.stroke();
+ txt(flag?'Flagged as fire':'Not flagged yet',RX+235,312,32,flag?'#FFF8F2':SOFT,600,'center');
+ txt('Simplified test:',RX,410,24,SOFT,600);
+ txt('3.9 µm above 320 K, and',RX,446,24,SOFT,500);
+ txt('at least 10 K hotter than 11 µm',RX,480,24,SOFT,500);
+ txt('Fire 1000 K, ground 300 K',RX,560,24,SOFT,500);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>
