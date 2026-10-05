@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ACC='#C2410C',BLUE='#2F6DB5',WATER='#4F8FE0',RIVER='#123B6D',LAND='#DCD6C8';
+var DAYS=20,PEAK=6.5,PASSES=[3,9,15];
+function lvl(t){return 0.4+3.2*Math.exp(-Math.pow((t-PEAK)/2.6,2));}
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+var MX=30,MY=70,MW=756,MH=522,CS=6,NX=MW/CS,NY=MH/CS,hand=[];
+for(var j=0;NY>j;j++){for(var i=0;NX>i;i++){var x=i/NX*12,y=j/NY*8;var c=6+1.1*Math.sin(y/1.3)+0.4*Math.sin(y*1.7+1);
+ var d=Math.abs(x-c);var h=0.85*d+0.35*Math.sin(x*2.3+y*1.9)+0.25*Math.cos(x*3.1-y*2.2);if(d>4.2){h+=Math.pow(d-4.2,1.5)*4;}hand.push(d>0.12?Math.max(h,0.05):-1);}}
+function map(L,x0,y0,w,h,cs){var nx=NX,ny=NY,sx=w/nx,sy=h/ny;
+ for(var j=0;ny>j;j++){for(var i=0;nx>i;i++){var v=hand[j*nx+i];g.fillStyle=v===-1?RIVER:(L>v?WATER:LAND);g.fillRect((x0+i*sx)*S,(y0+j*sy)*S,(sx+0.6)*S,(sy+0.6)*S);}}}
+var shots=[];
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=((now-t0)/1000*1.0+5.0)%DAYS;
+ g.fillStyle='#F6F5F1';g.fillRect(0,0,3328,1280);
+ var L=lvl(t);
+ txt('Day '+Math.floor(t+1),MX,50,30,NAVY,600);
+ txt('The flood right now',MX+180,50,26,SOFT,500);
+ map(L,MX,MY,MW,MH,CS);
+ g.strokeStyle=RULE;g.lineWidth=2*S;g.strokeRect(MX*S,MY*S,MW*S,MH*S);
+ var R=860,GW=760,GY=90,GH=250;
+ txt('River level and satellite passes (every 6 days)',R,50,26,SOFT,600);
+ g.fillStyle='#FFFFFF';g.fillRect(R*S,GY*S,GW*S,GH*S);g.strokeStyle=RULE;g.strokeRect(R*S,GY*S,GW*S,GH*S);
+ function px(d){return R+20+(GW-40)*d/DAYS;}function py(v){return GY+GH-20-(GH-40)*v/3.8;}
+ g.strokeStyle=BLUE;g.lineWidth=4*S;g.beginPath();for(var k=0;200>=k;k++){var d=DAYS*k/200;if(k===0){g.moveTo(px(d)*S,py(lvl(d))*S);}else{g.lineTo(px(d)*S,py(lvl(d))*S);}}g.stroke();
+ g.strokeStyle=ACC;g.lineWidth=2*S;g.setLineDash([8*S,6*S]);g.beginPath();g.moveTo(px(PEAK)*S,(GY+10)*S);g.lineTo(px(PEAK)*S,(GY+GH-10)*S);g.stroke();g.setLineDash([]);
+ txt('Peak',px(PEAK)+8,GY+34,24,ACC,600);
+ for(var p=0;PASSES.length>p;p++){var d=PASSES[p];var done=t>=d;g.fillStyle=done?NAVY:'#FFFFFF';g.strokeStyle=NAVY;g.lineWidth=3*S;
+  g.beginPath();g.arc(px(d)*S,py(lvl(d))*S,10*S,0,2*Math.PI);g.fill();g.stroke();txt('Pass',px(d),GY+GH+30,24,NAVY,600,'center');}
+ g.fillStyle=NAVY;g.fillRect((px(t)-1.5)*S,(GY+6)*S,3*S,(GH-12)*S);
+ var TY=422,TW=240,TH=148;
+ txt('What the satellite saw',R,TY-16,26,SOFT,600);
+ for(p=0;PASSES.length>p;p++){var d2=PASSES[p],x0=R+p*(TW+20);
+  if(t>=d2){map(lvl(d2),x0,TY,TW,TH,4);}else{g.fillStyle='#FFFFFF';g.fillRect(x0*S,TY*S,TW*S,TH*S);txt('waiting…',x0+TW/2,TY+TH/2+8,24,SOFT,500,'center');}
+  g.strokeStyle=RULE;g.lineWidth=2*S;g.strokeRect(x0*S,TY*S,TW*S,TH*S);txt('Day '+d2,x0,TY+TH+28,24,NAVY,600);}
+ txt('No pass caught the peak on day 7',R,632,26,ACC,600);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>
