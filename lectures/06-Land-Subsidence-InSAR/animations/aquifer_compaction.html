@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ACC='#C2410C',BLUE='#2F6DB5',SAND='#EAD9A8',CLAY='#A9784F',SKY='#F6F5F1';
+var CYC=16,T1=9,T2=10,T3=15;
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+function rect(x,y,w,h,c){g.fillStyle=c;g.fillRect(x*S,y*S,w*S,h*S);}
+function ease(u){return u*u*(3-2*u);}
+function tag(s,x,y,col,bg){g.font='600 '+24*S+'px '+FONT;var w=g.measureText(s).width/S;g.fillStyle=bg;g.fillRect((x-8)*S,(y-24)*S,(w+16)*S,32*S);txt(s,x,y,24,col,600);}
+function state(t){var p=t%CYC,h,c,el,ph;
+ if(T1>p){var u=p/T1;h=-ease(u);c=ease(u);el=0;ph=0;}
+ else if(T2>p){h=-1;c=1;el=0;ph=1;}
+ else if(T3>p){var v=ease((p-T2)/(T3-T2));h=-1+0.8*v;c=1;el=0.08*v;ph=2;}
+ else{h=-0.2;c=1;el=0.08;ph=2;}
+ return {p:p,h:h,c:c,el:el,ph:ph};}
+function hist(fn,x0,y0,w,hh,lo,hi,now,col,label){
+ g.fillStyle='#FFFFFF';g.fillRect(x0*S,(y0-10)*S,w*S,(hh+20)*S);g.strokeStyle=RULE;g.lineWidth=2*S;g.strokeRect(x0*S,(y0-10)*S,w*S,(hh+20)*S);
+ txt(label,x0,y0-22,24,SOFT,600);
+ g.strokeStyle=col;g.lineWidth=4*S;g.beginPath();
+ for(var i=0;200>=i;i++){var tt=now*i/200,v=fn(state(tt)),y=y0+(hi-v)/(hi-lo)*hh,x=x0+10+(w-20)*tt/CYC;if(i===0){g.moveTo(x*S,y*S);}else{g.lineTo(x*S,y*S);}}
+ g.stroke();}
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=((now-t0)/1000+7)%CYC;var s=state(t);
+ g.fillStyle=SKY;g.fillRect(0,0,3328,1280);
+ var X0=30,W=940,top=150,sink=46*s.c-46*s.el;
+ var cl=[[250,70],[400,60]],y=top+sink;
+ rect(X0,y,W,40,'#C9B48A');
+ var yy=y+40;var lay=[['s',70],['c',cl[0][1]*(1-0.45*s.c+0.45*s.el*0.0)],['s',80],['c',cl[1][1]*(1-0.45*s.c)],['s',90]];
+ for(var k=0;lay.length>k;k++){var L=lay[k];rect(X0,yy,W,L[1],L[0]==='s'?SAND:CLAY);yy+=L[1];}
+ rect(X0,yy,W,600-yy,'#8D8D8D');txt('Bedrock',X0+16,yy+34,24,'#F6F5F1',600);
+ var wt=y+40+30-150*s.h;
+ g.strokeStyle=BLUE;g.lineWidth=4*S;g.setLineDash([14*S,8*S]);g.beginPath();g.moveTo(X0*S,(y+70+(-s.h)*180)*S);g.lineTo((X0+W)*S,(y+70+(-s.h)*180)*S);g.stroke();g.setLineDash([]);
+ txt('Water level',X0+W-12,y+62+(-s.h)*180,24,BLUE,600,'right');
+ var wx=X0+620;rect(wx-8,y-50,16,yy-y+40,'#5B6470');rect(wx-30,y-80,60,34,s.ph===0?ACC:'#9CA3AF');
+ txt(s.ph===0?'Pump on':'Pump off',wx,y-92,24,s.ph===0?ACC:SOFT,600,'center');
+ for(var b=0;3>b;b++){var hx=X0+80+b*170;rect(hx,y-70,90,70,'#FFFFFF');g.strokeStyle=NAVY;g.lineWidth=3*S;g.strokeRect(hx*S,(y-70)*S,90*S,70*S);
+  g.fillStyle=NAVY;g.beginPath();g.moveTo((hx-8)*S,(y-70)*S);g.lineTo((hx+45)*S,(y-108)*S);g.lineTo((hx+98)*S,(y-70)*S);g.closePath();g.fill();}
+ g.strokeStyle=ACC;g.lineWidth=2*S;g.setLineDash([8*S,6*S]);g.beginPath();g.moveTo(X0*S,top*S);g.lineTo((X0+W)*S,top*S);g.stroke();g.setLineDash([]);
+ txt('Original ground level',X0+W-10,top-12,24,ACC,600,'right');
+ tag('Sand: stiff, water flows easily',X0+16,y+40+48,NAVY,'rgba(234,217,168,0.92)');
+ tag('Clay: squeezes as water drains out',X0+16,y+40+70+30,'#FFFFFF','rgba(120,80,48,0.92)');
+ var R=1060,lab=['Pumping: water falls, clay squeezes, ground sinks','Pumping stops: the water level starts to recover','Recovery: water rises; the ground rises only a little'];
+ txt(lab[s.ph].split(': ')[0]+(lab[s.ph].indexOf(': ')>0?':':''),R,60,30,s.ph===0?ACC:NAVY,600);
+ if(lab[s.ph].indexOf(': ')>0){txt(lab[s.ph].split(': ')[1],R,98,26,NAVY,500);}
+ hist(function(q){return q.h;},R,190,560,140,-1.05,0.05,t,BLUE,'Water level');
+ hist(function(q){return -q.c+q.el;},R,420,560,140,-1.05,0.05,t,NAVY,'Ground level');
+ txt('Most of the sinking is permanent',R,618,24,ACC,600);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>

@@ -12,6 +12,7 @@ Teaching materials by **Akshay Raj Manocha** for a third-year undergraduate cour
 | 3 | InSAR Theory: real interferograms, error sources, correlation and wavelength | [PDF](lectures/03-InSAR-Theory/InSAR_Theory_Akshay_Raj_Manocha.pdf) | [Notes](lectures/03-InSAR-Theory/speaker_notes.md) |
 | 4 | Landslide Monitoring with InSAR: slope geometry, techniques, time series, case studies and engineering use (with animation) | [PDF](lectures/04-Landslide-Monitoring-InSAR/Landslide_Monitoring_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/04-Landslide-Monitoring-InSAR/speaker_notes.md) |
 | 5 | Earthquake Monitoring with InSAR: the earthquake cycle, coseismic fringes, fault models, case studies and engineering use (with animation) | [PDF](lectures/05-Earthquake-Monitoring-InSAR/Earthquake_Monitoring_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/05-Earthquake-Monitoring-InSAR/speaker_notes.md) |
+| 6 | Land Subsidence Monitoring with InSAR: causes, aquifer compaction, vertical motion, differential settlement, case studies and management (with animation) | [PDF](lectures/06-Land-Subsidence-InSAR/Land_Subsidence_InSAR_Akshay_Raj_Manocha.pdf) | [Notes](lectures/06-Land-Subsidence-InSAR/speaker_notes.md) |
 
 ## Practicals
 
