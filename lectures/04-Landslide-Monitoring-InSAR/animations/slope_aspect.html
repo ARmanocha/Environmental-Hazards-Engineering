@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#F6F5F1;overflow:hidden}canvas{display:block}</style></head><body><canvas id="c" width="3328" height="1280" style="width:1664px;height:640px"></canvas><script>
+(function(){
+var cv=document.getElementById('c'),g=cv.getContext('2d'),S=2;
+var FONT='-apple-system,Segoe UI,Helvetica,Arial,sans-serif',NAVY='#13233A',SOFT='#4A5563',RULE='#E2DFD7',ASC='#2F6DB5',DESC='#C2410C';
+var TH=39*Math.PI/180,BE=30*Math.PI/180,PERIOD=24,START=60;
+function sv(az){var a=az*Math.PI/180;return [Math.sin(TH)*Math.sin(a),Math.sin(TH)*Math.cos(a),Math.cos(TH)];}
+var SA=sv(260),SD=sv(100);
+function C(asp,s){var a=asp*Math.PI/180;return Math.cos(BE)*Math.sin(a)*s[0]+Math.cos(BE)*Math.cos(a)*s[1]-Math.sin(BE)*s[2];}
+var NAMES=['North','North-east','East','South-east','South','South-west','West','North-west'];
+function name(a){var i=Math.round(a/45)%8;return NAMES[i];}
+function txt(s,x,y,size,col,w,align){g.font=(w||500)+' '+size*S+'px '+FONT;g.fillStyle=col;g.textAlign=align||'left';g.fillText(s,x*S,y*S);}
+function arrow(x1,y1,x2,y2,col,lw,head){g.strokeStyle=col;g.fillStyle=col;g.lineWidth=lw*S;g.beginPath();g.moveTo(x1*S,y1*S);
+ var an=Math.atan2(y2-y1,x2-x1),hx=x2-head*0.8*Math.cos(an),hy=y2-head*0.8*Math.sin(an);g.lineTo(hx*S,hy*S);g.stroke();
+ g.beginPath();g.moveTo(x2*S,y2*S);g.lineTo((x2-head*Math.cos(an-0.45))*S,(y2-head*Math.sin(an-0.45))*S);g.lineTo((x2-head*Math.cos(an+0.45))*S,(y2-head*Math.sin(an+0.45))*S);g.closePath();g.fill();}
+function rr(x,y,w,h,r){g.beginPath();g.moveTo((x+r)*S,y*S);g.arcTo((x+w)*S,y*S,(x+w)*S,(y+h)*S,r*S);g.arcTo((x+w)*S,(y+h)*S,x*S,(y+h)*S,r*S);g.arcTo(x*S,(y+h)*S,x*S,y*S,r*S);g.arcTo(x*S,y*S,(x+w)*S,y*S,r*S);g.closePath();}
+function bar(y,label,col,c){
+ var pct=Math.round(Math.abs(c)*100),dir=c>0?'towards the satellite':'away from the satellite';
+ txt(label,760,y,30,NAVY,600);
+ g.fillStyle='#FFFFFF';rr(760,y+18,760,48,10);g.fill();g.strokeStyle=RULE;g.lineWidth=2*S;g.stroke();
+ if(pct>0){g.fillStyle=col;rr(760,y+18,Math.max(14,7.6*pct),48,10);g.fill();}
+ txt(pct+'%',1540,y+56,34,NAVY,600);
+ var note=pct>=30?'Seen well: moving '+dir:'Poorly seen: use the other pass';
+ txt(note,760,y+104,26,30>pct?DESC:SOFT,30>pct?600:500);}
+var t0=null;
+function frame(now){if(t0===null)t0=now;var t=(now-t0)/1000;
+ var asp=(START+360*t/PERIOD)%360;
+ g.fillStyle='#F6F5F1';g.fillRect(0,0,3328,1280);
+ var cx=330,cy=280,R=200;
+ g.fillStyle='#FFFFFF';g.beginPath();g.arc(cx*S,cy*S,R*S,0,2*Math.PI);g.fill();g.strokeStyle=RULE;g.lineWidth=3*S;g.stroke();
+ g.strokeStyle=RULE;g.lineWidth=2*S;g.beginPath();g.moveTo(cx*S,(cy-R)*S);g.lineTo(cx*S,(cy+R)*S);g.moveTo((cx-R)*S,cy*S);g.lineTo((cx+R)*S,cy*S);g.stroke();
+ txt('N',cx,cy-R-16,28,SOFT,600,'center');txt('S',cx,cy+R+40,28,SOFT,600,'center');
+ txt('W',cx-R-30,cy+10,28,SOFT,600,'center');txt('E',cx+R+30,cy+10,28,SOFT,600,'center');
+ var a=asp*Math.PI/180,L=R-30;
+ arrow(cx-0.15*L*Math.sin(a),cy+0.15*L*Math.cos(a),cx+L*Math.sin(a),cy-L*Math.cos(a),NAVY,10,40);
+ g.fillStyle=NAVY;g.beginPath();g.arc(cx*S,cy*S,9*S,0,2*Math.PI);g.fill();
+ arrow(40,580,130,580,ASC,5,22);txt('Ascending pass looks east',148,589,24,ASC,600);
+ arrow(130,624,40,624,DESC,5,22);txt('Descending pass looks west',148,633,24,DESC,600);
+ txt('The slope faces',760,60,28,SOFT,500);
+ txt(name(asp)+'  ('+Math.round(asp)+'°)',760,120,52,NAVY,600);
+ txt('Arrow = direction of downslope motion',760,166,24,SOFT,500);
+ bar(240,'Ascending pass',ASC,C(asp,SA));
+ bar(420,'Descending pass',DESC,C(asp,SD));
+ txt('Slope 30°, incidence 39°. % = share of the downslope motion along the line of sight.',760,612,24,SOFT,500);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script></body></html>
